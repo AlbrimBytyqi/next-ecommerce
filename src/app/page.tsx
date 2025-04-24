@@ -17,10 +17,6 @@ const HomePage = async () => {
   //   getProducts();
   // }, [wixClient]);
 
-  // const wixClient = await wixClientServer();
-  // const res = await wixClient.products.queryProducts().find();
-  // console.log(res);
-
   return (
     <div className="">
       <Slider />
@@ -28,7 +24,7 @@ const HomePage = async () => {
         <h1 className=" text-2xl">Featchured Products</h1>
         <Suspense fallback={"loading"}>
           <ProductList
-            categoryId={process.env.NEXT_PUBLIC_FEATURED_PRODUCTS_CATEGORY_ID}
+            categoryId={process.env.NEXT_PUBLIC_FEATURED_PRODUCTS_CATEGORY_ID!}
             limit={4}
           />
         </Suspense>
@@ -41,7 +37,12 @@ const HomePage = async () => {
       </div>
       <div className="mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <h1 className=" text-2xl">New Products</h1>
-        <ProductList />
+        <ProductList
+          categoryId={
+            process.env.NEXT_PUBLIC_FEATURED_PRODUCTS_CATEGORY_ID_ALL_PRODUCTS!
+          }
+          limit={4}
+        />
       </div>
     </div>
   );
