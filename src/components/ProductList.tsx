@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import DOMPurify from "isomorphic-dompurify";
+import { notFound } from "next/navigation";
 
 const PRODUCT_PER_PAGE = 20;
 
@@ -17,11 +18,16 @@ const ProductList = async ({
   searchParams?: any;
 }) => {
   const wixClient = await wixClientServer();
+
   const res = await wixClient.products
     .queryProducts()
     .eq("collectionIds", categoryId)
     .limit(limit || PRODUCT_PER_PAGE)
     .find();
+
+  if (!res.items[0]) {
+    return notFound();
+  }
 
   return (
     <div className=" mt-12 flex gap-x-8 gap-y-16 justify-between flex-wrap">
