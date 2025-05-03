@@ -1,5 +1,6 @@
 "use client";
 
+import { useWixClient } from "@/hooks/useWixClient";
 import React, { useState } from "react";
 
 const Add = ({
@@ -23,6 +24,23 @@ const Add = ({
     if (type === "i" && quantity < stockNumber) {
       setQuantity((prev) => prev + 1);
     }
+  };
+
+  const wixClient = useWixClient();
+
+  const addItem = async () => {
+    const response = await wixClient.currentCart.addToCurrentCart({
+      lineItems: [
+        {
+          catalogReference: {
+            appId: process.env.NEXT_PUBLIC_WIX_APP_ID!,
+            catalogItemId: productId,
+            ...(variantId && { options: { variantId } }),
+          },
+          quantity: quantity,
+        },
+      ],
+    });
   };
 
   return (
@@ -55,7 +73,10 @@ const Add = ({
             </div>
           )}
         </div>
-        <button className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:text-white disabled:ring-pink-200">
+        <button
+          onClick={() => addItem()}
+          className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:text-white disabled:ring-pink-200"
+        >
           Add to Cart
         </button>
       </div>
