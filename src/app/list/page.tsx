@@ -3,6 +3,7 @@ import ProductList from "@/components/ProductList";
 import { wixClientServer } from "@/lib/wixClientServer";
 import Image from "next/image";
 import React, { Suspense } from "react";
+import Skeleton from "@/components/Skeleton";
 
 const ListPage = async ({ searchParams }: { searchParams: any }) => {
   const wixClient = await wixClientServer();
@@ -39,7 +40,7 @@ const ListPage = async ({ searchParams }: { searchParams: any }) => {
       <h1 className=" mt-12 text-xl font-semibold">
         {cat?.collection?.name} For You!
       </h1>
-      <Suspense fallback={"loading"}>
+      <Suspense fallback={<Skeleton />}>
         <ProductList
           categoryId={
             cat.collection?._id ||

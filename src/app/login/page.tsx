@@ -19,8 +19,6 @@ const LoginPage = () => {
 
   const isLoggedIn = wixClient.auth.loggedIn();
 
-  console.log(isLoggedIn);
-
   if (isLoggedIn) {
     router.push("/");
   }
