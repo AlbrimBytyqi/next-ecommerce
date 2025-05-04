@@ -1,10 +1,8 @@
 import { wixClientServer } from "@/lib/wixClientServer";
 import { products } from "@wix/stores";
+import DOMPurify from "isomorphic-dompurify";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import DOMPurify from "isomorphic-dompurify";
-import { notFound } from "next/navigation";
 import Pagination from "./Pagination";
 
 const PRODUCT_PER_PAGE = 8;
@@ -29,7 +27,7 @@ const ProductList = async ({
       searchParams?.type ? [searchParams.type] : ["physical", "digital"]
     )
     .gt("priceData.price", searchParams?.min || 0)
-    .lt("priceData.price", searchParams?.max || 9999)
+    .lt("priceData.price", searchParams?.max || 999999)
     .limit(limit || PRODUCT_PER_PAGE)
     .skip(
       searchParams?.page
@@ -40,6 +38,7 @@ const ProductList = async ({
 
   if (searchParams?.sort) {
     const [sortType, sortBy] = searchParams.sort.split(" ");
+
     if (sortType === "asc") {
       productQuery.ascending(sortBy);
     }
@@ -59,19 +58,15 @@ const ProductList = async ({
           key={product._id}
         >
           <div className="relative w-full h-80">
-            {product.media?.mainMedia?.image && (
-              <Image
-                // src={"https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load"}
-                src={product.media?.mainMedia?.image?.url || "/product.png"}
-                alt=""
-                fill
-                sizes="25vw"
-                className=" absolute object-cover rounded-md z-10 hover:opacity-0 transition-opacity ease-in-out duration-500"
-              />
-            )}
+            <Image
+              src={product.media?.mainMedia?.image?.url || "/product.png"}
+              alt=""
+              fill
+              sizes="25vw"
+              className=" absolute object-cover rounded-md z-10 hover:opacity-0 transition-opacity ease-in-out duration-500"
+            />
             {product.media?.items && (
               <Image
-                // src={"https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load"}
                 src={product.media?.items[1]?.image?.url || "/product.png"}
                 alt=""
                 fill
@@ -97,7 +92,7 @@ const ProductList = async ({
             ></div>
           )}
           <button className=" rounded-2xl ring-1 ring-lama text-lama w-max py-2 px-4 text-xs hover:bg-lama hover:text-white">
-            Add to cart
+            Add to Cart
           </button>
         </Link>
       ))}
