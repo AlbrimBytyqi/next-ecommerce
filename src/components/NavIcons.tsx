@@ -44,8 +44,6 @@ const NavIcons = () => {
   //   window.location.href = authUrl;
   // };
 
-  console.log(pathName);
-
   const handleLogout = async () => {
     setIsLoading(true);
     Cookies.remove("refreshToken");

@@ -34,8 +34,6 @@ const CustomizeProducts = ({
     setSelectedOptions((prev) => ({ ...prev, [optionType]: choice }));
   };
 
-  console.log(variants);
-
   const isVariantInStock = (choices: { [key: string]: string }) => {
     return variants.some((variant) => {
       const variantChoices = variant.choices;
