@@ -20,7 +20,7 @@ const Menu = () => {
   const { counter } = useCartStore();
 
   const handleProfile = () => {
-    router.push("/profile");
+    // router.push("/profile");
     setOpen(false);
   };
 
